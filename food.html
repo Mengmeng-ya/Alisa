@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Zealand Cuisine | TRAVEL NZ</title>
+    <style>
+        /* 保持原有样式不变 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            background-color: #4D8531;
+            position: relative;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo-text {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            height: 100%;
+            align-items: center;
+        }
+        
+        .nav-menu li {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 15px 20px;
+            transition: all 0.3s ease;
+            display: block;
+            height: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+        
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            background-color: #5D9E3B;
+        }
+        .nav-menu li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background-color: white;
+        }
+        
+        .banner-container {
+            position: relative;
+            height: 50vh;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        .banner-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .banner-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            pointer-events: none;
+        }
+        
+        .banner-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .banner-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .banner-title-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+        .banner-title-overlay h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .banner-title-overlay p {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 600px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .banner-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.3);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            padding: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .banner-controls:hover {
+            background: #4D8531;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .prev-btn {
+            left: 30px;
+        }
+        
+        .next-btn {
+            right: 30px;
+        }
+        
+        .banner-indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: #4D8531;
+            transform: scale(1.5);
+        }
+        
+        .main-content {
+            background-color: #E7F0C1;
+            padding: 40px 0;
+            padding-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to right, #4D8531, #5D9E3B);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .service-notice {
+            background-color: #f8f9fa;
+            border-left: 4px solid #4D8531;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .service-notice i {
+            color: #4D8531;
+            font-weight: bold;
+        }
+        
+        .new-zealand-food {
+            margin-bottom: 60px;
+            width: 100%;
+        }
+        
+        .section-title {
+            font-size: 26px;
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 20px;
+            color: #4D8531;
+            font-weight: bold;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background-color: #4D8531;
+        }
+        
+        .food-description {
+            font-size: 17px;
+            line-height: 1.9;
+            margin-bottom: 40px;
+            text-align: justify;
+            color: #555;
+            max-width: 100%;
+            width: 100%;
+            padding: 0 10px;
+        }
+        
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .food-card {
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            transition: all 0.4s ease;
+            background-color: white;
+        }
+        
+        .food-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        }
+        
+        .food-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        
+        .food-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .food-info {
+            padding: 15px;
+            background-color: white;
+        }
+        
+        .food-label {
+            font-size: 19px;
+            font-weight: bold;
+            color: #4D8531;
+            margin-bottom: 8px;
+        }
+        
+        .food-tip {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .local-tag {
+            display: inline-block;
+            background-color: #f0f7e6;
+            color: #4D8531;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+        
+        .booking-guide {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .booking-title {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .booking-desc {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 25px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .primary-btn {
+            background-color: #4D8531;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            text-decoration: none; /* 新增：移除链接下划线 */
+            display: inline-block; /* 新增：确保按钮样式生效 */
+        }
+        
+        .primary-btn:hover {
+            background-color: #5D9E3B;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .secondary-btn {
+            background-color: white;
+            color: #4D8531;
+            border: 2px solid #4D8531;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+            letter-spacing: 1px;
+            text-decoration: none; /* 新增：移除链接下划线 */
+            display: inline-block; /* 新增：确保按钮样式生效 */
+        }
+        
+        .secondary-btn:hover {
+            background-color: #f0f7e6;
+            transform: translateY(-3px);
+        }
+        
+        .footer {
+            background-color: #4D8531;
+            color: white;
+            padding: 30px 0;
+            font-size: 14px;
+        }
+        .footer .container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 1400px;
+        }
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-contact, .footer-hours {
+            text-align: left;
+        }
+        .footer-copyright {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+        .footer-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+            opacity: 1;
+        }
+        
+        @media (max-width: 1024px) {
+            .banner-title-overlay h2 {
+                font-size: 28px;
+            }
+            .banner-title-overlay p {
+                font-size: 16px;
+            }
+            .food-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            .logo-text {
+                font-size: 18px;
+            }
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                width: 100%;
+            }
+            .nav-menu li a {
+                padding: 10px 15px;
+                font-size: 15px;
+            }
+            .banner-container {
+                height: 40vh;
+            }
+            .banner-title-overlay {
+                padding: 30px;
+            }
+            .banner-title-overlay h2 {
+                font-size: 24px;
+            }
+            .banner-title-overlay p {
+                font-size: 14px;
+            }
+            .banner-controls {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            .prev-btn {
+                left: 20px;
+            }
+            .next-btn {
+                right: 20px;
+            }
+            .section-title {
+                font-size: 22px;
+            }
+            .food-grid {
+                grid-template-columns: 1fr;
+            }
+            .food-card {
+                height: 300px;
+            }
+            .food-card img {
+                height: 180px;
+            }
+            .action-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .footer-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-contact, .footer-hours {
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .banner-container {
+                height: 30vh;
+            }
+            .banner-title-overlay {
+                padding: 20px;
+            }
+            .banner-title-overlay h2 {
+                font-size: 20px;
+            }
+            .banner-title-overlay p {
+                font-size: 12px;
+            }
+            .section-title {
+                font-size: 20px;
+            }
+            .food-description {
+                font-size: 14px;
+            }
+            .primary-btn, .secondary-btn {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-text">TRAVEL NZ - Pure Middle-earth, Amazing New Zealand</div> 
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="food.html" class="active">Food</a></li> 
+                    <li><a href="attractions.html">Attractions</a></li> 
+                    <li><a href="guide.html">Tour</a></li> 
+                    <li><a href="message.html">Contact</a></li> 
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner Carousel -->
+    <section class="banner-container">
+        <div class="banner-slider" id="bannerSlider">
+            <div class="banner-slide active">
+                <a href="images/images/Milford Sound,.jpg"><img src="images/images/Milford Sound,.jpg" alt="Milford Sound,"></a>
+<div class="banner-title-overlay">
+        <h2>Milford Sound</h2>
+                    <p>Nature's Masterpiece in Fiordland</p>
+              </div>
+            </div>
+            <div class="banner-slide">
+                <a href="images/images/queenstown.jpg"><img src="images/images/queenstown.jpg" alt="queenstown"></a>
+<div class="banner-title-overlay">
+        <h2>Queenstown</h2>
+                    <p>Adventure Capital of the World</p>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <a href="images/images/Lake Tekapo.jpg"><img src="images/images/Lake Tekapo.jpg" alt="Lake Tekapo"></a>
+<div class="banner-title-overlay">
+        <h2>Lake Tekapo</h2>
+                    <p>Stargazing Paradise</p>
+              </div>
+            </div>
+            <div class="banner-slide">
+                <a href="images/images/Hobbiton.jpg"><img src="images/images/Hobbiton.jpg" alt="Hobbiton"></a>
+<div class="banner-title-overlay">
+        <h2>Hobbiton</h2>
+                    <p>Step Into Middle-earth</p>
+              </div>
+            </div>
+            <div class="banner-slide">
+                <a href="images/images/Fox Glacier.jpg"><img src="images/images/Fox Glacier.jpg" alt="Fox Glacier"></a>
+<div class="banner-title-overlay">
+        <h2>Fox Glacier</h2>
+                    <p>Walk on Ancient Ice</p>
+              </div>
+            </div>
+            <div class="banner-slide">
+                <a href="images/images/Rotorua.jpg"><img src="images/images/Rotorua.jpg" alt="Rotorua"></a>
+<div class="banner-title-overlay">
+        <h2>Rotorua</h2>
+               <p>Māori Culture &amp; Thermal Wonders</p>
+              </div>
+            </div>
+            <div class="banner-slide">
+                <a href="images/images/Auckland.jpg"><img src="images/images/Auckland.jpg" alt="Auckland"></a>
+<div class="banner-title-overlay">
+        <h2>Auckland</h2>
+                    <p>City of Sails</p>
+              </div>
+            </div>
+            <div class="banner-slide">
+              <a href="images/images/Stewart Island.jpg"><img src="images/images/Stewart Island.jpg" alt="Stewart Island"></a>
+<div class="banner-title-overlay">
+        <h2>Stewart Island</h2>
+                    <p>Untouched Wilderness</p>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Carousel Controls -->
+        <button class="banner-controls prev-btn" onclick="prevSlide()">‹</button>
+        <button class="banner-controls next-btn" onclick="nextSlide()">›</button>
+        
+        <!-- Carousel Indicators -->
+        <div class="banner-indicators" id="indicators">
+            <span class="indicator active" onclick="currentSlide(0)"></span>
+            <span class="indicator" onclick="currentSlide(1)"></span>
+            <span class="indicator" onclick="currentSlide(2)"></span>
+            <span class="indicator" onclick="currentSlide(3)"></span>
+            <span class="indicator" onclick="currentSlide(4)"></span>
+            <span class="indicator" onclick="currentSlide(5)"></span>
+            <span class="indicator" onclick="currentSlide(6)"></span>
+            <span class="indicator" onclick="currentSlide(7)"></span>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Service Notice -->
+            <div class="service-notice">
+                <i>💡</i> All featured food experiences below are included in our itineraries—no extra booking needed, so you can enjoy New Zealand flavors with ease.
+            </div>
+
+            <!-- New Zealand Food Section -->
+            <section class="new-zealand-food">
+                <h2 class="section-title">New Zealand Cuisine</h2>
+                
+                <div class="food-description">
+                  On your New Zealand journey, we've carefully selected the most iconic local food experiences. From freshly caught Fish and Chips (a Kiwi favorite street food) to traditional Māori Hāngi (enjoyed during your Māori cultural village visit), each dish tells a story of this land.<br><br>
+                  We've specially arranged Green-lipped Mussels seafood dinners (a must-try in Queenstown), herb-roasted grass-fed lamb (paired with local honey sauce), and signature desserts—national treasure Pavlova and Hokey Pokey honeycomb ice cream. All ingredients are sourced from New Zealand's pure farms and waters, and our guides will share the stories behind each dish, so you can not only enjoy the flavors but also understand the culture.
+              </div>
+                
+                <div class="food-grid">
+                    <div class="food-card">
+                        <a href="images/images/FishandChips.jpg"><img src="images/images/FishandChips.jpg" alt="FishandChips"></a>
+<div class="food-info">
+            <div class="food-label">Fish and Chips</div>
+                            <div class="food-tip">Fresh from Auckland's waterfront, best with tartar sauce</div>
+                            <span class="local-tag">Included on Day 2</span>
+                        </div>
+                    </div>
+                    
+                    <div class="food-card">
+                        <a href="images/images/Hokey Pokey Ice Cream.jpg"><img src="Hokey Pokey Ice Cream.jpg" alt="Hokey Pokey Ice Cream"></a>
+<div class="food-info">
+            <div class="food-label">Hokey Pokey Ice Cream</div>
+                            <div class="food-tip">New Zealand's original flavor, rich and not overly sweet</div>
+                            <span class="local-tag">Complimentary Tasting</span>
+                        </div>
+                    </div>
+                    
+                    <div class="food-card">
+                        <a href="images/images/Lamb.jpg"><img src="Lamb.jpg" alt="Lamb"></a>
+<div class="food-info">
+            <div class="food-label">Herb-Roasted Lamb</div>
+                            <div class="food-tip">From South Island farms, served with rosemary sauce</div>
+                            <span class="local-tag">Dinner on Day 5</span>
+                        </div>
+                    </div>
+                    
+                    <div class="food-card">
+                        <a href="images/images/Green-lipped Mussels.jpg"><img src="images/images/Green-lipped Mussels.jpg" alt="Green-lipped Mussels"></a>
+<div class="food-info">
+            <div class="food-label">Green-lipped Mussels</div>
+                            <div class="food-tip">From pristine waters, best garlic butter baked</div>
+                            <span class="local-tag">Queenstown Specialty</span>
+                        </div>
+                    </div>
+                    
+                    <div class="food-card">
+                        <a href="images/images/Pavlova.jpg"><img src="images/images/Pavlova.jpg" alt="Pavlova"></a>
+<div class="food-info">
+            <div class="food-label">Pavlova</div>
+                            <div class="food-tip">Crispy outside, soft inside, with seasonal fruits and cream</div>
+                            <span class="local-tag">Dessert on Day 7</span>
+                        </div>
+                    </div>
+                    
+                    <div class="food-card">
+                        <a href="images/images/Hangi.jpg"><img src="images/images/Hangi.jpg" alt="Hangi"></a>
+<div class="food-info">
+            <div class="food-label">Māori Hāngi</div>
+                            <div class="food-tip">Traditional underground cooking, experience  flavors</div>
+                            <span class="local-tag">Rotorua Cultural Experience</span>
+                      </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Booking Guide -->
+            <section class="booking-guide">
+                <h3 class="booking-title">Want to know more about food in our itineraries?</h3>
+                <p class="booking-desc">Each of our itineraries includes 4-6 unique food experiences. Our expert guides will take you to local favorites, avoiding tourist traps. Book now to receive a detailed food map and menu translations.</p>
+                <div class="action-buttons">
+                    <!-- 核心修改：将按钮改为链接，指向 tour 页面（通常为 guide.html） -->
+                    <a href="guide.html" class="primary-btn">View Itineraries Now</a>
+                    <button class="secondary-btn">Inquire About Food Details</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+   <!-- Footer -->
+<footer class="footer">
+  <div class="container" style="padding: 40px 20px;">
+        <!-- 三列内容区域 -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <!-- 联系我们 -->
+            <div style="min-width: 250px; margin: 15px;">
+                <p style="font-weight: bold; font-size: 18px; margin-bottom: 15px; color: #fff;">Contact Us</p>
+                <p style="margin: 8px 0; color: #f0f0f0;">24/7 Customer Service: +64 9 876 5432</p>
+                <p style="margin: 8px 0;"><a href="mailto:service@travelnz.com" style="color: #f0f0f0; text-decoration: none;">Email: service@travelnz.com</a></p>
+                <p style="margin: 8px 0; color: #f0f0f0;">WeChat: TravelNZ_2025</p>
+            </div>
+
+            <!-- 服务时间 -->
+            <div style="min-width: 250px; margin: 15px;">
+                <p style="font-weight: bold; font-size: 18px; margin-bottom: 15px; color: #fff;">Service Hours</p>
+                <p style="margin: 8px 0; color: #f0f0f0;">Mon-Fri: 9:00 - 21:00</p>
+                <p style="margin: 8px 0; color: #f0f0f0;">Sat-Sun: 10:00 - 18:00</p>
+                <p style="margin: 8px 0; color: #f0f0f0;">Public Holidays: 10:00 - 16:00</p>
+            </div>
+
+            <!-- 快速链接 -->
+            <div style="min-width: 250px; margin: 15px;">
+                <p style="font-weight: bold; font-size: 18px; margin-bottom: 15px; color: #fff;">Quick Links</p>
+                <p style="margin: 8px 0;"><a href="index.html" style="color: #f0f0f0; text-decoration: none;">Home</a></p>
+                <p style="margin: 8px 0;"><a href="guide.html" style="color: #f0f0f0; text-decoration: none;">Tours</a></p>
+                <p style="margin: 8px 0;"><a href="message.html" style="color: #f0f0f0; text-decoration: none;">Feedback</a></p>
+                <p style="margin: 8px 0;"><a href="#" style="color: #f0f0f0; text-decoration: none;">Privacy Policy</a></p>
+            </div>
+        </div>
+
+        <!-- 版权信息 -->
+        <div style="text-align: center; padding-top: 20px;">
+          <p style="margin: 5px 0; color: #e0e0e0; font-size: 13px;">Copyright © 2025 TRAVEL NZ. All rights reserved. 2023404030209-Alisa</p>
+            <p style="margin: 5px 0; color: #e0e0e0; font-size: 13px;">Designed with ❤️ for your New Zealand journey</p>
+        </div>
+    </div>
+</footer>
+    <!-- Carousel Script -->
+    <script>
+        let slideIndex = 0;
+        let slides = document.getElementsByClassName("banner-slide");
+        let indicators = document.getElementsByClassName("indicator");
+        let slideTimer;
+        const slideInterval = 5000;
+
+        function initCarousel() {
+            showSlide(slideIndex);
+            startAutoPlay();
+            
+            const bannerContainer = document.querySelector('.banner-container');
+            bannerContainer.addEventListener('mouseenter', pauseAutoPlay);
+            bannerContainer.addEventListener('mouseleave', startAutoPlay);
+        }
+
+        function showSlide(index) {
+            if (index >= slides.length) slideIndex = 0;
+            if (index < 0) slideIndex = slides.length - 1;
+            
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+                indicators[i].classList.remove('active');
+            }
+            
+            slides[slideIndex].classList.add('active');
+            indicators[slideIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            slideIndex++;
+            showSlide(slideIndex);
+        }
+
+        function prevSlide() {
+            slideIndex--;
+            showSlide(slideIndex);
+        }
+
+        function currentSlide(index) {
+            slideIndex = index;
+            showSlide(slideIndex);
+        }
+
+        function startAutoPlay() {
+            clearInterval(slideTimer);
+            slideTimer = setInterval(nextSlide, slideInterval);
+        }
+
+        function pauseAutoPlay() {
+            clearInterval(slideTimer);
+        }
+
+        window.addEventListener('load', initCarousel);
+    </script>
+</body>
+</html>
