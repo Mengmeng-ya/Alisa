@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Message - Pure Middle-earth, Amazing New Zealand</title>
+    <style>
+        /* 新西兰旅游网站通用样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        /* 顶部导航栏 */
+        .header {
+            background-color: #4D8531;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            height: 100%;
+            align-items: center;
+        }
+
+        .nav-menu li {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 12px 20px;
+            transition: background-color 0.3s ease;
+            display: block;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            background-color: #5D9E3B;
+        }
+
+        /* 轮播图Banner */
+        .banner-container {
+            position: relative;
+            height: 50vh;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .banner-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .banner-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .banner-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .banner-title-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .banner-title {
+            max-width: 50%;
+            max-height: 40%;
+            object-fit: contain;
+            filter: brightness(1.3) contrast(1.1);
+        }
+
+        /* 轮播图控制按钮 */
+        .banner-controls {
+            background: transparent;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .prev-btn {
+            left: 20px;
+        }
+
+        .next-btn {
+            right: 20px;
+        }
+
+        /* 轮播图指示点 */
+        .banner-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: white;
+        }
+
+        /* 主要内容区域 */
+        .main-content {
+            background-color: #E7F0C1;
+            padding: 30px 0;
+            padding-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 通用表单样式 */
+        .form-label {
+            color: #4D8531;
+            font-weight: bold;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #4D8531;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            background-color: #f8f9fa;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #5D9E3B;
+            background-color: white;
+        }
+
+        .form-input::placeholder {
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* 通用按钮样式 */
+        .btn {
+            background-color: #4D8531;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .btn:hover {
+            background-color: #5D9E3B;
+        }
+
+        /* 留言页面样式 */
+        .message-section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .message-hero-image {
+            width: 100%;
+            max-width: 800px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin: 0 auto 30px;
+            display: block;
+        }
+
+        .message-title {
+            font-size: 32px;
+            color: #4D8531;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .message-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        /* 留言表单布局 */
+        .message-form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .message-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* 表情选择器 */
+        .emoji-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .emoji-option {
+            font-size: 24px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .emoji-option:hover {
+            background-color: #f0f7f2;
+            transform: scale(1.1);
+        }
+
+        .emoji-option.selected {
+            background-color: #4D8531;
+            color: white;
+        }
+
+        /* 评分系统 */
+        .rating-system {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .rating-star {
+            font-size: 24px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .rating-star.active {
+            color: #ffc107;
+        }
+
+        /* 留言类型选择 */
+        .message-type-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .type-option {
+            padding: 10px;
+            border: 2px solid #4D8531;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .type-option.selected {
+            background-color: #4D8531;
+            color: white;
+        }
+
+        /* 留言内容文本域 */
+        .message-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* 提交按钮 */
+        .submit-btn {
+            background-color: #4D8531;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: #5D9E3B;
+        }
+
+        /* 留言预览区域 */
+        .message-preview {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-title {
+            font-size: 22px;
+            color: #4D8531;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .preview-content {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            min-height: 300px;
+            border: 1px dashed #ddd;
+            margin-bottom: 20px;
+        }
+
+        .preview-placeholder {
+            color: #999;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        /* 右侧附加内容 */
+        .preview-additional {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-tips {
+            background-color: #f0f7f2;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .preview-tips h3 {
+            color: #4D8531;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .preview-tips ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .preview-tips li {
+            margin-bottom: 8px;
+        }
+
+        .preview-faq {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #4D8531;
+        }
+
+        .preview-faq h3 {
+            color: #4D8531;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .faq-answer {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 装饰元素 */
+        .decoration-leaf {
+            position: absolute;
+            font-size: 100px;
+            color: rgba(77, 133, 49, 0.1);
+            z-index: 0;
+        }
+
+        .leaf-1 {
+            top: 50px;
+            left: 50px;
+            transform: rotate(45deg);
+        }
+
+        .leaf-2 {
+            bottom: 50px;
+            right: 50px;
+            transform: rotate(-45deg);
+        }
+
+        /* Footer - 优化排版与响应式布局 */
+        .footer {
+            background-color: #4D8531;
+            color: white;
+            padding: 50px 0 30px; /* 增加顶部内边距 */
+            font-size: 14px;
+        }
+        .footer .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 自适应列数 */
+            gap: 40px; /* 增加列间距 */
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1); /* 分隔线 */
+            padding-bottom: 30px;
+        }
+        .footer-contact, .footer-hours, .footer-quicklinks {
+            text-align: left;
+        }
+        .footer-title {
+            font-weight: bold;
+            margin-bottom: 18px; /* 增加标题与内容间距 */
+            font-size: 18px;
+            opacity: 1;
+            position: relative;
+            padding-bottom: 8px;
+        }
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #E7F0C1; /* 标题下划线 */
+        }
+        .footer p {
+            margin: 8px 0; /* 增加行间距 */
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+        .footer p:hover {
+            opacity: 1; /*  hover时文字更清晰 */
+        }
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+        .footer-link:hover {
+            color: #E7F0C1;
+            padding-left: 5px; /* 轻微位移效果 */
+        }
+        .footer-copyright {
+            text-align: center;
+            padding-top: 30px;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+        .footer-copyright p {
+            margin: 5px 0;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .banner-container {
+                height: 30vh;
+            }
+            
+            .banner-controls {
+                padding: 10px 15px;
+                font-size: 1rem;
+            }
+            
+            .message-form-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .message-title {
+                font-size: 24px;
+            }
+            
+            .footer-info {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .footer-contact, .footer-hours, .footer-quicklinks {
+                text-align: center;
+            }
+            .footer-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .decoration-leaf {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-text">TRAVEL NZ - Pure Middle-earth, Amazing New Zealand</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="food.html">Food</a></li>
+                    <li><a href="attractions.html">Attractions</a></li>
+                    <li><a href="guide.html">Tour&nbsp;</a></li>
+                    <li><a href="message.html">Contact&nbsp;</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- 轮播图Banner -->
+    <section class="banner-container">
+        <div class="banner-slider" id="bannerSlider">
+            <div class="banner-slide">
+                <img src="images/Milford Sound,.jpg" alt="Milford Sound">
+                <div class="banner-title-overlay"> </div>
+            </div>
+            <div class="banner-slide">
+                <img src="images/queenstown.jpg" alt="queenstown">
+                <div class="banner-title-overlay">
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="images/Lake Tekapo.jpg" alt="Lake Tekapo">
+                <div class="banner-title-overlay"> </div>
+            </div>
+            <div class="banner-slide">
+                <img src="images/Hobbiton.jpg" alt="Hobbiton">
+                <div class="banner-title-overlay"> </div>
+          </div>
+            <div class="banner-slide">
+                <img src="images/Fox Glacier.jpg" alt="Fox Glacier">
+                <div class="banner-title-overlay"> </div>
+            </div>
+            <div class="banner-slide">
+                <img src="images/Rotorua.jpg" alt="Rotorua">
+                <div class="banner-title-overlay"> </div>
+            </div>
+            <div class="banner-slide">
+                <img src="images/Auckland.jpg" alt="Auckland">
+                <div class="banner-title-overlay"> </div>
+            </div>
+            <div class="banner-slide">
+              <img src="images/Stewart Island.jpg" alt="Stewart Island">
+                <div class="banner-title-overlay"> </div>
+            </div>
+        </div>
+        
+        <!-- 轮播控制按钮 -->
+        <button class="banner-controls prev-btn" onclick="prevSlide()">‹</button>
+        <button class="banner-controls next-btn" onclick="nextSlide()">›</button>
+        
+        <!-- 轮播指示点 -->
+        <div class="banner-indicators" id="indicators">
+            <span class="indicator active" onclick="currentSlide(1)"></span>
+            <span class="indicator" onclick="currentSlide(2)"></span>
+            <span class="indicator" onclick="currentSlide(3)"></span>
+            <span class="indicator" onclick="currentSlide(4)"></span>
+            <span class="indicator" onclick="currentSlide(5)"></span>
+            <span class="indicator" onclick="currentSlide(6)"></span>
+            <span class="indicator" onclick="currentSlide(7)"></span>
+            <span class="indicator" onclick="currentSlide(8)"></span>
+        </div>
+    </section>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <div class="decoration-leaf leaf-1">🌿</div>
+        <div class="decoration-leaf leaf-2">🌿</div>
+        
+        <div class="container">
+            <section class="message-section">
+                <!-- Panrama图片 -->
+                <img src="images/Panrama.jpg" alt="Panrama" class="message-hero-image">
+                
+                <!-- 在线留言标题 -->
+                <h1 class="message-title">Leave a Message</h1>
+                <p class="message-subtitle">Share your thoughts, questions or feedback about your New Zealand journey</p>
+                
+                <!-- 留言表单和预览区域 -->
+                <div class="message-form-container">
+                    <!-- 留言表单 -->
+                    <form class="message-form" id="messageForm">
+                        <div class="form-group">
+                            <label class="form-label">Your Nickname</label>
+                            <input type="text" class="form-input" placeholder="Enter your nickname" name="nickname" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" placeholder="Email address" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">How are you feeling?</label>
+                            <div class="emoji-selector">
+                                <div class="emoji-option" data-emoji="😊">😊</div>
+                                <div class="emoji-option" data-emoji="😍">😍</div>
+                                <div class="emoji-option" data-emoji="🤔">🤔</div>
+                                <div class="emoji-option" data-emoji="😢">😢</div>
+                                <div class="emoji-option" data-emoji="🤩">🤩</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Rate your experience</label>
+                            <div class="rating-system">
+                                <span class="rating-star" data-rating="1">★</span>
+                                <span class="rating-star" data-rating="2">★</span>
+                                <span class="rating-star" data-rating="3">★</span>
+                                <span class="rating-star" data-rating="4">★</span>
+                                <span class="rating-star" data-rating="5">★</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Message Type</label>
+                            <div class="message-type-selector">
+                                <div class="type-option" data-type="question">Question</div>
+                                <div class="type-option" data-type="suggestion">Suggestion</div>
+                                <div class="type-option" data-type="compliment">Compliment</div>
+                                <div class="type-option" data-type="complaint">Complaint</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Message Subject</label>
+                            <input type="text" class="form-input" placeholder="Message subject" name="title" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Your Message</label>
+                            <textarea class="form-input message-textarea" placeholder="Enter your message content" name="message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Submit Message</button>
+                    </form>
+                    
+                    <!-- 留言预览区域 -->
+                    <div class="message-preview">
+                        <h2 class="preview-title">Message Preview</h2>
+                        <div class="preview-content" id="previewContent">
+                            <div class="preview-placeholder">Your message preview will appear here</div>
+                        </div>
+                        
+                        <div class="preview-additional">
+                            <div class="preview-tips">
+                                <h3>Tips for a Great Message</h3>
+                                <ul>
+                                    <li>Be specific about your experience</li>
+                                    <li>Include details about locations or activities</li>
+                                    <li>Mention what you enjoyed most</li>
+                                    <li>Share any suggestions for improvement</li>
+                                </ul>
+                                <p>Your feedback helps us improve our services for future travelers!</p>
+                            </div>
+                            
+                            <div class="preview-faq">
+                                <h3>Frequently Asked Questions</h3>
+                                <div class="faq-item">
+                                    <div class="faq-question">How long does it take to get a response?</div>
+                                    <div class="faq-answer">We typically respond within 24-48 hours during business days.</div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">Can I request a custom tour?</div>
+                                    <div class="faq-answer">Yes! We specialize in creating personalized New Zealand experiences.</div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">Do you offer group discounts?</div>
+                                    <div class="faq-answer">Absolutely! Contact us for special rates for groups of 6 or more.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-info">
+                <div class="footer-contact">
+                    <p class="footer-title">Contact Us</p>
+                    <p>24/7 Customer Service: +64 9 876 5432</p>
+                    <p>Email: <a href="mailto:service@travelnz.com" class="footer-link">service@travelnz.com</a></p>
+                    <p>WeChat: TravelNZ_2025</p>
+                </div>
+                <div class="footer-hours">
+                    <p class="footer-title">Service Hours</p>
+                    <p>Mon-Fri: 9:00 - 21:00</p>
+                    <p>Sat-Sun: 10:00 - 18:00</p>
+                    <p>Public Holidays: 10:00 - 16:00</p>
+                </div>
+                <div class="footer-quicklinks">
+                    <p class="footer-title">Quick Links</p>
+                    <p><a href="index.html" class="footer-link">Home</a></p>
+                    <p><a href="guide.html" class="footer-link">Tours</a></p>
+                    <p><a href="message.html" class="footer-link">Feedback</a></p>
+                    <p><a href="#" class="footer-link">Privacy Policy</a></p>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>Copyright © 2025 TRAVEL NZ. All rights reserved. 2023404030209-Alisa</p>
+                <p>Designed with ❤️ for your New Zealand journey</p>
+          </div>
+        </div>
+    </footer>
+
+    <script>
+        // 轮播图功能
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.banner-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            // 确保索引在有效范围内
+            if (index >= totalSlides) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = totalSlides - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+
+            // 移动轮播图
+            const slider = document.getElementById('bannerSlider');
+            slider.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+
+            // 更新指示点
+            indicators.forEach((indicator, i) => {
+                indicator.classList.toggle('active', i === currentSlideIndex);
+            });
+        }
+
+        function nextSlide() {
+            showSlide(currentSlideIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlideIndex - 1);
+        }
+
+        function currentSlide(index) {
+            showSlide(index - 1);
+        }
+
+        // 键盘控制
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+
+        // 触摸控制（移动设备）
+        let startX = 0;
+        let endX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            endX = e.changedTouches[0].clientX;
+            if (startX - endX > 50) {
+                nextSlide();
+            } else if (endX - startX > 50) {
+                prevSlide();
+            }
+        });
+
+        // 留言表单交互功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 表情选择器
+            const emojiOptions = document.querySelectorAll('.emoji-option');
+            let selectedEmoji = '';
+            
+            emojiOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    emojiOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedEmoji = this.getAttribute('data-emoji');
+                    updatePreview();
+                });
+            });
+            
+            // 评分系统
+            const ratingStars = document.querySelectorAll('.rating-star');
+            let selectedRating = 0;
+            
+            ratingStars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    selectedRating = rating;
+                    
+                    ratingStars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                    
+                    updatePreview();
+                });
+                
+                // 悬停效果
+                star.addEventListener('mouseover', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    
+                    ratingStars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    ratingStars.forEach((s, index) => {
+                        if (index < selectedRating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // 留言类型选择
+            const typeOptions = document.querySelectorAll('.type-option');
+            let selectedType = '';
+            
+            typeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    typeOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedType = this.getAttribute('data-type');
+                    updatePreview();
+                });
+            });
+            
+            // 表单输入实时更新预览
+            const formInputs = document.querySelectorAll('#messageForm input, #messageForm textarea');
+            formInputs.forEach(input => {
+                input.addEventListener('input', updatePreview);
+            });
+            
+            // 更新预览函数
+            function updatePreview() {
+                const previewContent = document.getElementById('previewContent');
+                const nickname = document.querySelector('input[name="nickname"]').value;
+                const title = document.querySelector('input[name="title"]').value;
+                const message = document.querySelector('textarea[name="message"]').value;
+                
+                let previewHTML = '';
+                
+                if (nickname || title || message) {
+                    previewHTML = `
+                        <div style="margin-bottom: 15px;">
+                            ${selectedEmoji ? `<span style="font-size: 24px; margin-right: 10px;">${selectedEmoji}</span>` : ''}
+                            <strong>${nickname || 'Anonymous'}</strong>
+                            ${selectedRating ? `<span style="color: #ffc107; margin-left: 10px;">${'★'.repeat(selectedRating)}</span>` : ''}
+                        </div>
+                        ${selectedType ? `<div style="margin-bottom: 10px;"><span style="background: #4D8531; color: white; padding: 3px 8px; border-radius: 3px; font-size: 12px;">${selectedType}</span></div>` : ''}
+                        ${title ? `<h3 style="color: #4D8531; margin-bottom: 10px;">${title}</h3>` : ''}
+                        ${message ? `<p>${message}</p>` : ''}
+                    `;
+                } else {
+                    previewHTML = '<div class="preview-placeholder">Your message preview will appear here</div>';
+                }
+                
+                previewContent.innerHTML = previewHTML;
+            }
+            
+            // 表单提交处理
+            document.getElementById('messageForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 获取表单数据
+                const formData = new FormData(this);
+                const nickname = formData.get('nickname');
+                const email = formData.get('email');
+                const title = formData.get('title');
+                const message = formData.get('message');
+                
+                // 创建提交消息
+                let submitMessage = '留言提交成功！';
+                
+                if (selectedEmoji) {
+                    submitMessage += ` 您选择了 ${selectedEmoji} 表情`;
+                }
+                
+                if (selectedRating) {
+                    submitMessage += `，给出了 ${selectedRating} 星评价`;
+                }
+                
+                if (selectedType) {
+                    submitMessage += `，留言类型为 ${selectedType}`;
+                }
+                
+                alert(submitMessage + '。感谢您的反馈！');
+                
+                // 重置表单
+                this.reset();
+                
+                // 重置交互元素
+                emojiOptions.forEach(opt => opt.classList.remove('selected'));
+                ratingStars.forEach(star => star.classList.remove('active'));
+                typeOptions.forEach(opt => opt.classList.remove('selected'));
+                selectedEmoji = '';
+                selectedRating = 0;
+                selectedType = '';
+                
+                // 更新预览
+                updatePreview();
+            });
+        });
+    </script>
+</body>
+</html>
